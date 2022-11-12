@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  loadedFeature = 'recipe'; //variable for storing navbar option (recipe/shopping list).
+  loadedFeature = 'recipe';
 
   onNavigate(feature: string) {
     this.loadedFeature = feature;

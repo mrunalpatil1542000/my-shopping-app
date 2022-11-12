@@ -1,10 +1,7 @@
-<!--recipes component displays content on right side of page. It shows 'Please select a Recipe' by default and 
-after selecting recipe from recipe list, it will display recipe by using recipe-detail component.-->
-
 <div class="row">
   <div class="col-md-5">
     <app-recipe-list
-      (recipeWasSelected)="selectedRecipe = $event"></app-recipe-list> <!--assigning event(passed) data to 'selectedRecipe propert'-->
+      (recipeWasSelected)="selectedRecipe = $event"></app-recipe-list>
   </div>
   <div class="col-md-7">
     <app-recipe-detail

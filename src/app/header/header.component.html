@@ -1,5 +1,3 @@
-<!--Header Component contains navigation bar with Recipes and Shopping List options and one Manage dropdown button-->
-
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -12,7 +10,7 @@
         <li><a href="#" (click)="onSelect('shopping-list')">Shopping List</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown">
+        <li class="dropdown" appDropdown>
           <a href="#" class="dropdown-toggle" role="button">Manage <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="#">Save Data</a></li>
