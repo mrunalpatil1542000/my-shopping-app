@@ -10,12 +10,16 @@ export class ShoppingListService {
   ];
 
   getIngredients() {
-    return this.ingredients.slice();
+    return this.ingredients.slice();  // to get copy of array of ingredients
   }
 
-  getIngredient(index: number) {
+  getIngredient(index: number) {    // to get clicked ingredient
     return this.ingredients[index];
   }
+
+  // getIngredient(index: number) {
+  //   return this.ingredients[index];
+  // }
 
   addIngredient(ingredient: Ingredient) {
     this.ingredients.push(ingredient);
