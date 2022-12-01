@@ -1,4 +1,7 @@
-import { EventEmitter, Injectable } from '@angular/core';
+//We have added the declaration of recipe service in app.module as we want its instance in recipe and shopping list section also.
+//otherwise bug - explained in section 16(237).
+import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs/Subject';
 
 import { Recipe } from './recipe.model';
 import { Ingredient } from '../shared/ingredient.model';
@@ -6,7 +9,7 @@ import { ShoppingListService } from '../shopping-list/shopping-list.service';
 
 @Injectable()
 export class RecipeService {
-  recipeSelected = new EventEmitter<Recipe>();
+  recipesChanged = new Subject<Recipe[]>();
 
   private recipes: Recipe[] = [
     new Recipe(
@@ -38,5 +41,20 @@ export class RecipeService {
 
   addIngredientsToShoppingList(ingredients: Ingredient[]) {
     this.slService.addIngredients(ingredients);
+  }
+
+  addRecipe(recipe: Recipe) {
+    this.recipes.push(recipe);
+    this.recipesChanged.next(this.recipes.slice()); // triggering subject observable to update recipe list on page after changes as we are passing copy of the recipe array.(passing updated array)
+  }
+
+  updateRecipe(index: number, newRecipe: Recipe) {
+    this.recipes[index] = newRecipe;
+    this.recipesChanged.next(this.recipes.slice()); // triggering subject observable to update recipe list on page after changes as we are passing copy of the recipe array.(passing updated array)
+  }
+
+  deleteRecipe(index: number) {
+    this.recipes.splice(index, 1);
+    this.recipesChanged.next(this.recipes.slice()); // triggering subject observable to update recipe list on page after changes as we are passing copy of the recipe array.(passing updated array)
   }
 }
