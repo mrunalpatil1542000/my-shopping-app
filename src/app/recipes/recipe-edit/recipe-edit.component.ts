@@ -14,34 +14,28 @@ export class RecipeEditComponent implements OnInit {
   editMode = false;
   recipeForm: FormGroup;
 
-  get recipeControls() {
-    return (this.recipeForm.get('ingredients') as FormArray).controls
-  }
-
-  constructor(private route: ActivatedRoute,
-              private recipeService: RecipeService,
-              private router: Router) {
-  }
+  constructor(
+    private route: ActivatedRoute,
+    private recipeService: RecipeService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
-    this.route.params
-      .subscribe(
-        (params: Params) => {
-          this.id = +params['id'];
-          this.editMode = params['id'] != null;
-          this.initForm();
-        }
-      );
+    this.route.params.subscribe((params: Params) => {
+      this.id = +params['id'];
+      this.editMode = params['id'] != null;
+      this.initForm();
+    });
   }
 
-  onSubmit() {     // on submitting recipe form 2 methods will call according to edit mode.
+  onSubmit() {
     // const newRecipe = new Recipe(
     //   this.recipeForm.value['name'],
     //   this.recipeForm.value['description'],
     //   this.recipeForm.value['imagePath'],
     //   this.recipeForm.value['ingredients']);
     if (this.editMode) {
-      this.recipeService.updateRecipe(this.id, this.recipeForm.value); // as using reactive approach we can pass all form values by once.
+      this.recipeService.updateRecipe(this.id, this.recipeForm.value);
     } else {
       this.recipeService.addRecipe(this.recipeForm.value);
     }
@@ -51,8 +45,8 @@ export class RecipeEditComponent implements OnInit {
   onAddIngredient() {
     (<FormArray>this.recipeForm.get('ingredients')).push(
       new FormGroup({
-        'name': new FormControl(null, Validators.required),
-        'amount': new FormControl(null, [
+        name: new FormControl(null, Validators.required),
+        amount: new FormControl(null, [
           Validators.required,
           Validators.pattern(/^[1-9]+[0-9]*$/)
         ])
@@ -65,10 +59,10 @@ export class RecipeEditComponent implements OnInit {
   }
 
   onCancel() {
-    this.router.navigate(['../'], {relativeTo: this.route});
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 
-  private initForm() {   // giving initial values to the recipe editing form according to edit mode. If edit mode true then clicked recipe values otherwise blank.
+  private initForm() {
     let recipeName = '';
     let recipeImagePath = '';
     let recipeDescription = '';
@@ -83,8 +77,8 @@ export class RecipeEditComponent implements OnInit {
         for (let ingredient of recipe.ingredients) {
           recipeIngredients.push(
             new FormGroup({
-              'name': new FormControl(ingredient.name, Validators.required),
-              'amount': new FormControl(ingredient.amount, [
+              name: new FormControl(ingredient.name, Validators.required),
+              amount: new FormControl(ingredient.amount, [
                 Validators.required,
                 Validators.pattern(/^[1-9]+[0-9]*$/)
               ])
@@ -95,11 +89,10 @@ export class RecipeEditComponent implements OnInit {
     }
 
     this.recipeForm = new FormGroup({
-      'name': new FormControl(recipeName, Validators.required),
-      'imagePath': new FormControl(recipeImagePath, Validators.required),
-      'description': new FormControl(recipeDescription, Validators.required),
-      'ingredients': recipeIngredients
+      name: new FormControl(recipeName, Validators.required),
+      imagePath: new FormControl(recipeImagePath, Validators.required),
+      description: new FormControl(recipeDescription, Validators.required),
+      ingredients: recipeIngredients
     });
   }
-
 }

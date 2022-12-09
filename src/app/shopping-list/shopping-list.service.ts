@@ -1,5 +1,5 @@
 import { Ingredient } from '../shared/ingredient.model';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 
 export class ShoppingListService {
   ingredientsChanged = new Subject<Ingredient[]>();
@@ -10,16 +10,12 @@ export class ShoppingListService {
   ];
 
   getIngredients() {
-    return this.ingredients.slice();  // to get copy of array of ingredients
+    return this.ingredients.slice();
   }
 
-  getIngredient(index: number) {    // to get clicked ingredient
+  getIngredient(index: number) {
     return this.ingredients[index];
   }
-
-  // getIngredient(index: number) {
-  //   return this.ingredients[index];
-  // }
 
   addIngredient(ingredient: Ingredient) {
     this.ingredients.push(ingredient);
