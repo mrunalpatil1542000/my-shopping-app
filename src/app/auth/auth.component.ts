@@ -1,43 +1,57 @@
-import { Component } from '@angular/core';
+import {
+  Component,
+  ComponentFactoryResolver,
+  ViewChild,
+  OnDestroy
+} from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 import { AuthService, AuthResponseData } from './auth.service';
+import { AlertComponent } from '../shared/alert/alert.component';
+import { PlaceholderDirective } from '../shared/placeholder/placeholder.directive';
 
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html'
 })
-export class AuthComponent {
+export class AuthComponent implements OnDestroy {
   isLoginMode = true;
-  isLoading = false;                                       //To display loading spinner accordingly
+  isLoading = false;
   error: string = null;
+  @ViewChild(PlaceholderDirective, { static: false }) alertHost: PlaceholderDirective;   //Finding the first occurance of element which uses "PlaceholderDirective" directive
 
-  constructor(private authService: AuthService, private router: Router) {}
+  private closeSub: Subscription;
 
-  onSwitchMode() {                                         //To switch the button label to login or sign up.
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private componentFactoryResolver: ComponentFactoryResolver
+  ) {}
+
+  onSwitchMode() {
     this.isLoginMode = !this.isLoginMode;
   }
 
   onSubmit(form: NgForm) {
-    if (!form.valid) {                                    //For extra checking layer if user change it through browser by hacking.
+    if (!form.valid) {
       return;
     }
     const email = form.value.email;
     const password = form.value.password;
 
-    let authObs: Observable<AuthResponseData>;           //as we have same function to do on both login and signup, we declared one observable variable authObs.
-                                                        
+    let authObs: Observable<AuthResponseData>;
+
     this.isLoading = true;
 
     if (this.isLoginMode) {
-      authObs = this.authService.login(email, password);   //login will return AuthResponseData interface object as an observable in response
+      authObs = this.authService.login(email, password);
     } else {
-      authObs = this.authService.signup(email, password);  //sign-up will return AuthResponseData interface object as an observable in response
+      authObs = this.authService.signup(email, password);
     }
 
-    authObs.subscribe(                                     //subscribing the collected observable from login or sign-up.
+    authObs.subscribe(
       resData => {
         console.log(resData);
         this.isLoading = false;
@@ -46,10 +60,38 @@ export class AuthComponent {
       errorMessage => {
         console.log(errorMessage);
         this.error = errorMessage;
+        this.showErrorAlert(errorMessage);
         this.isLoading = false;
       }
     );
 
     form.reset();
+  }
+
+  onHandleError() {                     //dynamic component using *ngIf
+    this.error = null;
+  }
+
+  ngOnDestroy() {
+    if (this.closeSub) {
+      this.closeSub.unsubscribe();
+    }
+  }
+
+  private showErrorAlert(message: string) {
+    // const alertCmp = new AlertComponent();
+    const alertCmpFactory = this.componentFactoryResolver.resolveComponentFactory(
+      AlertComponent                                                      //component that is inserted dynamically
+    );                                                                   //Factory method to create component dynamically
+    const hostViewContainerRef = this.alertHost.viewContainerRef;
+    hostViewContainerRef.clear();
+
+    const componentRef = hostViewContainerRef.createComponent(alertCmpFactory);
+
+    componentRef.instance.message = message;
+    this.closeSub = componentRef.instance.close.subscribe(() => {
+      this.closeSub.unsubscribe();
+      hostViewContainerRef.clear();
+    });
   }
 }

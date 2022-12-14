@@ -6,36 +6,36 @@ import { throwError, BehaviorSubject } from 'rxjs';
 
 import { User } from './user.model';
 
-export interface AuthResponseData {                   //declaring the fields that we get in response of login and sign-up as interface and giving this interface to http methods as return type
-  kind: string;    
+export interface AuthResponseData {
+  kind: string;
   idToken: string;
   email: string;
   refreshToken: string;
   expiresIn: string;
   localId: string;
-  registered?: boolean;                              //this field we will only get in login so declared as optional.
+  registered?: boolean;
 }
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  user = new BehaviorSubject<User>(null);            //BehaviorSubject is one type of subject. A BehaviorSubject holds one value. When it is subscribed it emits the value immediately. A Subject doesn't hold a value.
+  user = new BehaviorSubject<User>(null);
   private tokenExpirationTimer: any;
 
   constructor(private http: HttpClient, private router: Router) {}
 
   signup(email: string, password: string) {
     return this.http
-      .post<AuthResponseData>(                        //specifying the response (AuthResponseData interface) we get in post method
-        'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCgxSqMLqJ7v_xviWPsnRsKUWFf5xUW7D8',
+      .post<AuthResponseData>(
+        'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyDb0xTaRAoxyCgvaDF3kk5VYOsTwB_3o7Y',
         {
           email: email,
           password: password,
           returnSecureToken: true
         }
       )
-      .pipe(                                           
-        catchError(this.handleError),                       //catchError operator is used to catch errors from the response
-        tap(resData => {                                    //we can use switch case in ts file on specified error msgs given in firebase endpoints page but this is good approach
+      .pipe(
+        catchError(this.handleError),
+        tap(resData => {
           this.handleAuthentication(
             resData.email,
             resData.localId,
@@ -57,9 +57,9 @@ export class AuthService {
         }
       )
       .pipe(
-        catchError(this.handleError),                        //Created private method handleError to handle both login and sign-up errors
+        catchError(this.handleError),
         tap(resData => {
-          this.handleAuthentication(                         //Created private method handleAuthentication to create user for both login and sign-up methods
+          this.handleAuthentication(
             resData.email,
             resData.localId,
             resData.idToken,
@@ -69,22 +69,22 @@ export class AuthService {
       );
   }
 
-  autoLogin() {                                           //as after refresh data went, we use this method to get the already logged in user and its data
+  autoLogin() {
     const userData: {
-      email: string;                                      //specifying which type of data we will get
+      email: string;
       id: string;
       _token: string;
       _tokenExpirationDate: string;
-    } = JSON.parse(localStorage.getItem('userData'));      //getting user data from browser using "userData" key and parse it in js object as it is in string
-    if (!userData) {                                       //user data present or not (user signed-in or not)
+    } = JSON.parse(localStorage.getItem('userData'));
+    if (!userData) {
       return;
     }
 
-    const loadedUser = new User(                           //creating user with loaded data if user data is present
+    const loadedUser = new User(
       userData.email,
       userData.id,
       userData._token,
-      new Date(userData._tokenExpirationDate)               //converting date to Date format as its in string
+      new Date(userData._tokenExpirationDate)
     );
 
     if (loadedUser.token) {
@@ -112,7 +112,7 @@ export class AuthService {
     }, expirationDuration);
   }
 
-  private handleAuthentication(                                   //creating new user for login and sign-up
+  private handleAuthentication(
     email: string,
     userId: string,
     token: string,
@@ -122,12 +122,12 @@ export class AuthService {
     const user = new User(email, userId, token, expirationDate);
     this.user.next(user);
     this.autoLogout(expiresIn * 1000);
-    localStorage.setItem('userData', JSON.stringify(user));      //If we refresh the page the user data will vanished, so we use browser's local storage
-  }                                                              //data is in js object so converting it in string using stringify method
+    localStorage.setItem('userData', JSON.stringify(user));
+  }
 
-  private handleError(errorRes: HttpErrorResponse) {              //this code is same for login and sign-up method.
+  private handleError(errorRes: HttpErrorResponse) {
     let errorMessage = 'An unknown error occurred!';
-    if (!errorRes.error || !errorRes.error.error) {              //For network error (does not return error key)
+    if (!errorRes.error || !errorRes.error.error) {
       return throwError(errorMessage);
     }
     switch (errorRes.error.error.message) {
@@ -141,6 +141,6 @@ export class AuthService {
         errorMessage = 'This password is not correct.';
         break;
     }
-    return throwError(errorMessage);                              //throwError is used to wrap the error into observable. here we are returning error observable which has error message
+    return throwError(errorMessage);
   }
 }

@@ -1,5 +1,3 @@
-//AuthInterceptorService is used to attach token to the request.
-
 import { Injectable } from '@angular/core';
 import {
   HttpInterceptor,

@@ -1,5 +1,3 @@
-//AuthGuard is used to deny access to the recipe url to unautheticated user.
-
 import {
   CanActivate,
   ActivatedRouteSnapshot,
@@ -21,7 +19,7 @@ export class AuthGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     router: RouterStateSnapshot
   ):
-    | boolean                                            //return types of canActivate() method
+    | boolean
     | UrlTree
     | Promise<boolean | UrlTree>
     | Observable<boolean | UrlTree> {
@@ -32,9 +30,9 @@ export class AuthGuard implements CanActivate {
         if (isAuth) {
           return true;
         }
-        return this.router.createUrlTree(['/auth']);  //or we can use UrlTree to navigate.
+        return this.router.createUrlTree(['/auth']);
       })
-      // tap(isAuth => {                              //we can naviagte to auth page if user wants to access recipe page and is not logged in or signed up using this way also.
+      // tap(isAuth => {
       //   if (!isAuth) {
       //     this.router.navigate(['/auth']);
       //   }

@@ -1,5 +1,3 @@
-//to store user info and passing valid token 
-
 export class User {
   constructor(
     public email: string,
