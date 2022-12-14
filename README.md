@@ -1,3 +1,18 @@
+Shopping list project is using Firebase as backend for database and authentication.
+1. Creating database in firebase...(For initial use without authentication)
+    Go to firebase website. Sign-in with google account. Go to console. Create new database and use that database url for http requests.
+
+2. For authentication...
+    Go to realtime database. Change the database rules accordingly. Then to set up authentication method, go in authentication tab. click on Get started. Select the       method and save.
+ 
+ Now we are using firebase's authentication. In users we can see logged in users.
+ 
+ We will use firebase's dedicated auth api. This firebase's api provide us the readymade endpoints to signup and login user instead of building our own.
+ To get the endpoints https://firebase.google.com/docs/reference/rest/auth 
+ Use the url for post method in our client(Angular) code with API key. API key is present in settings -> project settings -> Web api key in firebase.
+
+
+
 # MyShoppingApp
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.0.2.
