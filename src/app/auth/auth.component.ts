@@ -20,7 +20,7 @@ export class AuthComponent implements OnDestroy {
   isLoginMode = true;
   isLoading = false;
   error: string = null;
-  @ViewChild(PlaceholderDirective, { static: false }) alertHost: PlaceholderDirective;   //Finding the first occurance of element which uses "PlaceholderDirective" directive
+  @ViewChild(PlaceholderDirective, { static: false }) alertHost: PlaceholderDirective;
 
   private closeSub: Subscription;
 
@@ -68,7 +68,7 @@ export class AuthComponent implements OnDestroy {
     form.reset();
   }
 
-  onHandleError() {                     //dynamic component using *ngIf
+  onHandleError() {
     this.error = null;
   }
 
@@ -81,8 +81,8 @@ export class AuthComponent implements OnDestroy {
   private showErrorAlert(message: string) {
     // const alertCmp = new AlertComponent();
     const alertCmpFactory = this.componentFactoryResolver.resolveComponentFactory(
-      AlertComponent                                                      //component that is inserted dynamically
-    );                                                                   //Factory method to create component dynamically
+      AlertComponent
+    );
     const hostViewContainerRef = this.alertHost.viewContainerRef;
     hostViewContainerRef.clear();
 
