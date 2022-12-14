@@ -26,7 +26,7 @@ export class AuthService {
   signup(email: string, password: string) {
     return this.http
       .post<AuthResponseData>(                        //specifying the response (AuthResponseData interface) we get in post method
-        'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCgxSqMLqJ7v_xviWPsnRsKUWFf5xUW7D8',
+        'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key= firebase auth key',
         {
           email: email,
           password: password,
@@ -49,7 +49,7 @@ export class AuthService {
   login(email: string, password: string) {
     return this.http
       .post<AuthResponseData>(
-        'https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=AIzaSyDb0xTaRAoxyCgvaDF3kk5VYOsTwB_3o7Y',
+        'https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key= firebase auth key',
         {
           email: email,
           password: password,
