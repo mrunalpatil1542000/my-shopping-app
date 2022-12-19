@@ -78,6 +78,7 @@ export class AuthComponent implements OnDestroy {
     }
   }
 
+  //Code to show alert box using dynamic component instead of *ngIf.
   private showErrorAlert(message: string) {
     // const alertCmp = new AlertComponent();
     const alertCmpFactory = this.componentFactoryResolver.resolveComponentFactory(
