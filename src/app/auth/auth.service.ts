@@ -26,7 +26,7 @@ export class AuthService {
   signup(email: string, password: string) {
     return this.http
       .post<AuthResponseData>(
-        'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyCgxSqMLqJ7v_xviWPsnRsKUWFf5xUW7D8',
+        'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key= firebase key',
         {
           email: email,
           password: password,
@@ -49,7 +49,7 @@ export class AuthService {
   login(email: string, password: string) {
     return this.http
       .post<AuthResponseData>(
-        'https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=AIzaSyCgxSqMLqJ7v_xviWPsnRsKUWFf5xUW7D8',
+        'https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key= firebase key',
         {
           email: email,
           password: password,
