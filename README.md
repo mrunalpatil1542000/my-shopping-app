@@ -13,6 +13,46 @@ Shopping list project is using Firebase as backend for database and authenticati
 
 
 
+...Deployment of Angular app...
+
+Steps :-
+1. Use and check environment variables. (in environment.ts and environment.prod.ts file).
+      We can add api keys in environment variables.
+
+2. Polish and test code.
+      optimize the code and test it.
+
+3. Building application for production.
+      To build the application need to run one command. This will convert all the code in js and create separate folder in dist folder.
+      cmd ---->  ng build 
+
+4. Deploy build artifacts (generated files) to static host.
+   i) In this project we are using firebase to host the application. For that we need to have firebase CLI.
+      cmd ---->  npm install -g firebase-tools
+      
+  ii) login to firebase account.
+      cmd ---->  firebase login
+      
+ iii) to connect to firebase project (that we have created for database). For this, should be in the dist folder.
+      cmd ---->  firebase init
+      
+  iv) Choose firebase service. Then select the project name.
+      ---->  Hosting
+   
+   v) Then give public directory name.
+      cmd ---->  dist/Our_project_folder_name
+      
+  vi) Select Y for single page application.
+      Every request will redirect to index.html page. As server don't know about the angular routes, after server reaching to index.html then angular will handle             routes.
+      
+ vii) For overwritten choose N.
+ 
+viii) To deploy run cmd. After that we will get project url.
+      cmd ----> firebase deploy
+
+
+
+
 # MyShoppingApp
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.0.2.
