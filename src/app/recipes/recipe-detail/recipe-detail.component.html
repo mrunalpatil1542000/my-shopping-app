@@ -1,17 +1,17 @@
 <div class="row">
   <div class="col-xs-12">
+    <h1>{{ recipe.name }}</h1>
+  </div>
+</div><br>
+<div class="row">
+  <div class="col-xs-12">
     <img
       [src]="recipe.imagePath"
       alt="{{ recipe.name }}"
       class="img-responsive"
       style="max-height: 300px;">
   </div>
-</div>
-<div class="row">
-  <div class="col-xs-12">
-    <h1>{{ recipe.name }}</h1>
-  </div>
-</div>
+</div><br>
 <div class="row">
   <div class="col-xs-12">
     <div
@@ -30,11 +30,15 @@
     </div>
   </div>
 </div>
+<hr>
+<h3>About</h3>
 <div class="row">
   <div class="col-xs-12">
     {{ recipe.description }}
   </div>
 </div>
+<hr>
+<h3>Ingredients</h3><br>
 <div class="row">
   <div class="col-xs-12">
     <ul class="list-group">

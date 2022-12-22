@@ -5,13 +5,18 @@
   class="list-group-item clearfix">
   <div class="pull-left">
     <h4 class="list-group-item-heading">{{ recipe.name }}</h4>
-    <p class="list-group-item-text">{{ recipe.description }}</p>
+    <hr>
+    <div class="col-md-12">
+    <p class="list-group-item-text col-md-8 pull-left">{{ recipe.description }}</p>
+    <span class="col-md-4 pull-left">
+      <img
+        [src]="recipe.imagePath"
+        alt="{{ recipe.name }}"
+        class="img-responsive"
+        style="max-width: 120px;">
+    </span>
+    </div>
   </div>
-  <span class="pull-right">
-        <img
-          [src]="recipe.imagePath"
-          alt="{{ recipe.name }}"
-          class="img-responsive"
-          style="max-height: 50px;">
-      </span>
+ 
 </a>
+<br>
