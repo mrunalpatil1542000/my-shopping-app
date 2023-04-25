@@ -1,3 +1,5 @@
+# MyShoppingApp
+
 Shopping list project is using Firebase as backend for database and authentication.
 1. Creating database in firebase...(For initial use without authentication)
     Go to firebase website. Sign-in with google account. Go to console. Create new database and use that database url for http requests.
@@ -13,7 +15,7 @@ Shopping list project is using Firebase as backend for database and authenticati
 
 
 
-...Deployment of Angular app...
+##...Deployment of Angular app...
 
 Steps :-
 1. Use and check environment variables. (in environment.ts and environment.prod.ts file).
@@ -53,7 +55,7 @@ viii) To deploy run cmd. After that we will get project url.
 
 
 
-# MyShoppingApp
+
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.0.2.
 
