@@ -15,7 +15,7 @@ Shopping list project is using Firebase as backend for database and authenticati
 
 
 
-##...Deployment of Angular app...
+## Deployment of Angular app
 
 Steps :-
 1. Use and check environment variables. (in environment.ts and environment.prod.ts file).
